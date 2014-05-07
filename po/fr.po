@@ -1,0 +1,10 @@
+# French translations for xfce4-maximus-plugin package.
+#
+#
+
+msgid "Close current active window"
+msgstr "Ferme la fenetre active courante"
+
+msgid "Desktop"
+msgstr "Bureau"
+
