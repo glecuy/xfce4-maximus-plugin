@@ -134,60 +134,60 @@ maximus_read (MaximusPlugin *maximus)
 static MaximusPlugin *
 maximus_new (XfcePanelPlugin *plugin)
 {
-	MaximusPlugin   *maximus;
-	GtkOrientation  orientation;
-	GtkWidget      *label;
-	GtkWidget * Image;
+    MaximusPlugin   *maximus;
+    GtkOrientation  orientation;
+    GtkWidget      *label;
+    GtkWidget * Image;
 
-	/* allocate memory for the plugin structure */
-	maximus = panel_slice_new0 (MaximusPlugin);
+    /* allocate memory for the plugin structure */
+    maximus = panel_slice_new0 (MaximusPlugin);
 
-	/* pointer to plugin */
-	maximus->plugin = plugin;
+    /* pointer to plugin */
+    maximus->plugin = plugin;
 
-	/* read the user settings */
-	maximus_read (maximus);
+    /* read the user settings */
+    maximus_read (maximus);
 
-	/* get the current orientation */
-	orientation = xfce_panel_plugin_get_orientation (plugin);
+    /* get the current orientation */
+    orientation = xfce_panel_plugin_get_orientation (plugin);
 
-	if ( orientation != GTK_ORIENTATION_HORIZONTAL )
-	{
-	  // Todo
-	}
+    if ( orientation != GTK_ORIENTATION_HORIZONTAL )
+    {
+      // TODO
+    }
 
-	/* create some panel widgets */
-	maximus->ebox = gtk_event_box_new ();
-	gtk_widget_show (maximus->ebox);
+    /* create some panel widgets */
+    maximus->ebox = gtk_event_box_new ();
+    gtk_widget_show (maximus->ebox);
 
-	maximus->hvbox = xfce_hvbox_new (orientation, FALSE, 2);
-	gtk_widget_show (maximus->hvbox);
-	gtk_container_add (GTK_CONTAINER (maximus->ebox), maximus->hvbox);
+    maximus->hvbox = xfce_hvbox_new (orientation, FALSE, 2);
+    gtk_widget_show (maximus->hvbox);
+    gtk_container_add (GTK_CONTAINER (maximus->ebox), maximus->hvbox);
 
-	/* 1- Widget for windows' icon list */
-	maximus->IconList = NULL;
-	maximus->hIconBox = xfce_hvbox_new (orientation, FALSE, 2);
-	gtk_widget_show (maximus->hIconBox);
-	gtk_box_pack_start (GTK_BOX (maximus->hvbox), maximus->hIconBox, FALSE, FALSE, 0);
+    /* 1- Widget for windows' icon list */
+    maximus->IconList = NULL;
+    maximus->hIconBox = xfce_hvbox_new (orientation, FALSE, 2);
+    gtk_widget_show (maximus->hIconBox);
+    gtk_box_pack_start (GTK_BOX (maximus->hvbox), maximus->hIconBox, FALSE, FALSE, 0);
 
-	/* 2- Widget window title bar */
-	maximus->WinTitle = gtk_label_new (_("Desktop"));
-	gtk_widget_show (maximus->WinTitle);
-	gtk_box_pack_start (GTK_BOX (maximus->hvbox), maximus->WinTitle, FALSE, FALSE, 0);
+    /* 2- Widget window title bar */
+    maximus->WinTitle = gtk_label_new (_("Desktop"));
+    gtk_widget_show (maximus->WinTitle);
+    gtk_box_pack_start (GTK_BOX (maximus->hvbox), maximus->WinTitle, FALSE, FALSE, 0);
 
-	/* 3- Widget for close button */
-	maximus->CloseEvtBox = gtk_event_box_new();
-	Image = gtk_image_new_from_stock( GTK_STOCK_CLOSE, GTK_ICON_SIZE_SMALL_TOOLBAR );
-	gtk_widget_show (Image);
-	gtk_container_add (GTK_CONTAINER (maximus->CloseEvtBox), Image);
-	gtk_widget_show (maximus->CloseEvtBox);
-	gtk_box_pack_end(GTK_BOX (maximus->hvbox), maximus->CloseEvtBox, FALSE, FALSE, 0);
-	gtk_widget_set_tooltip_text( maximus->CloseEvtBox, _("Close current active window") );
-	g_signal_connect(G_OBJECT(maximus->CloseEvtBox), "button_press_event", G_CALLBACK(mxs_OnClickedCloseWindow), (gpointer)maximus);
+    /* 3- Widget for close button */
+    maximus->CloseEvtBox = gtk_event_box_new();
+    Image = gtk_image_new_from_stock( GTK_STOCK_CLOSE, GTK_ICON_SIZE_SMALL_TOOLBAR );
+    gtk_widget_show (Image);
+    gtk_container_add (GTK_CONTAINER (maximus->CloseEvtBox), Image);
+    gtk_widget_show (maximus->CloseEvtBox);
+    gtk_box_pack_end(GTK_BOX (maximus->hvbox), maximus->CloseEvtBox, FALSE, FALSE, 0);
+    gtk_widget_set_tooltip_text( maximus->CloseEvtBox, _("Close current active window") );
+    g_signal_connect(G_OBJECT(maximus->CloseEvtBox), "button_press_event", G_CALLBACK(mxs_OnClickedCloseWindow), (gpointer)maximus);
 
-	xfce_panel_plugin_set_expand( maximus->plugin, TRUE );
+    xfce_panel_plugin_set_expand( maximus->plugin, TRUE );
 
-	return maximus;
+    return maximus;
 }
 
 
@@ -221,7 +221,7 @@ maximus_orientation_changed (XfcePanelPlugin *plugin,
                             GtkOrientation   orientation,
                             MaximusPlugin    *maximus)
 {
-  /* change the orienation of the box */
+  /* change the orientation of the box */
   xfce_hvbox_set_orientation (XFCE_HVBOX (maximus->hvbox), orientation);
 }
 
@@ -251,42 +251,42 @@ maximus_size_changed (XfcePanelPlugin *plugin,
 
 static void maximus_construct (XfcePanelPlugin *plugin)
 {
-	MaximusPlugin *maximus;
+    MaximusPlugin *maximus;
 
-	/* setup transation domain */
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+    /* setup transation domain */
+    xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
-	/* create the plugin */
-	maximus = maximus_new (plugin);
+    /* create the plugin */
+    maximus = maximus_new (plugin);
 
-	/* add the ebox to the panel */
-	gtk_container_add (GTK_CONTAINER (plugin), maximus->ebox);
+    /* add the ebox to the panel */
+    gtk_container_add (GTK_CONTAINER (plugin), maximus->ebox);
 
-	/* show the panel's right-click menu on this ebox */
-	xfce_panel_plugin_add_action_widget (plugin, maximus->ebox);
+    /* show the panel's right-click menu on this ebox */
+    xfce_panel_plugin_add_action_widget (plugin, maximus->ebox);
 
-	/* connect plugin signals */
-	g_signal_connect (G_OBJECT (plugin), "free-data",
-					G_CALLBACK (maximus_free), maximus);
+    /* connect plugin signals */
+    g_signal_connect (G_OBJECT (plugin), "free-data",
+                    G_CALLBACK (maximus_free), maximus);
 
-	g_signal_connect (G_OBJECT (plugin), "save",
-					G_CALLBACK (maximus_save), maximus);
+    g_signal_connect (G_OBJECT (plugin), "save",
+                    G_CALLBACK (maximus_save), maximus);
 
-	g_signal_connect (G_OBJECT (plugin), "size-changed",
-					G_CALLBACK (maximus_size_changed), maximus);
+    g_signal_connect (G_OBJECT (plugin), "size-changed",
+                    G_CALLBACK (maximus_size_changed), maximus);
 
-	g_signal_connect (G_OBJECT (plugin), "orientation-changed",
-					G_CALLBACK (maximus_orientation_changed), maximus);
+    g_signal_connect (G_OBJECT (plugin), "orientation-changed",
+                    G_CALLBACK (maximus_orientation_changed), maximus);
 
-	/* show the configure menu item and connect signal */
-	xfce_panel_plugin_menu_show_configure (plugin);
-	g_signal_connect (G_OBJECT (plugin), "configure-plugin",
-					G_CALLBACK (maximus_configure), maximus);
+    /* show the configure menu item and connect signal */
+    xfce_panel_plugin_menu_show_configure (plugin);
+    g_signal_connect (G_OBJECT (plugin), "configure-plugin",
+                    G_CALLBACK (maximus_configure), maximus);
 
-	/* show the about menu item and connect signal */
-	xfce_panel_plugin_menu_show_about (plugin);
-	g_signal_connect (G_OBJECT (plugin), "about",
-					G_CALLBACK (maximus_about), NULL);
+    /* show the about menu item and connect signal */
+    xfce_panel_plugin_menu_show_about (plugin);
+    g_signal_connect (G_OBJECT (plugin), "about",
+                    G_CALLBACK (maximus_about), NULL);
 
-	track_active_wnd( maximus );
+    track_active_wnd( maximus );
 }

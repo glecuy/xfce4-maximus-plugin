@@ -109,23 +109,23 @@ void
 maximus_about (XfcePanelPlugin *plugin)
 {
         static const gchar * const authors[] = {
-		"G Lecuyer <glecuyer207@gmail.com>",
-		NULL
-	};
+        "G Lecuyer <glecuyer207@gmail.com>",
+        NULL
+    };
 
-	static const gchar copyright[] = \
-		"Copyright \xc2\xa9 2014 Gerard Lecuyer";
+    static const gchar copyright[] = \
+        "Copyright \xc2\xa9 2014 Gerard Lecuyer";
 
-	static const gchar comments[] = "Based on original maximus daemon source";
+    static const gchar comments[] = "Based on original maximus daemon source";
 
-	gtk_show_about_dialog(
-					GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
-			       "authors", authors,
-			       "comments", comments,
-			       "copyright", copyright,
-			       "version", "0.1",
-			       //"website", "http://www.micahcarrick.com",
-			       "program-name", "xfce4 maximus plugin",
-			       "logo-icon-name", GTK_STOCK_EDIT,
-			       NULL); 
+    gtk_show_about_dialog(
+                    GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
+                   "authors", authors,
+                   "comments", comments,
+                   "copyright", copyright,
+                   "version", "0.1",
+                   //"website", "http://www.micahcarrick.com",
+                   "program-name", "xfce4 maximus plugin",
+                   "logo-icon-name", GTK_STOCK_ABOUT,
+                   NULL); 
 }

@@ -27,11 +27,11 @@
 G_BEGIN_DECLS
 
 typedef struct WindowIcon_s{
-	WnckWindow * Window;
+    WnckWindow * Window;
     GdkPixbuf * Pixbuf;
     GtkWidget * Image;
     GtkWidget * EventBox;
-	void * Parent;
+    void * Parent;
     struct WindowIcon_s * pNext;
 } WindowIcon_t;
 
@@ -50,7 +50,7 @@ typedef struct
     GtkWidget       *WinTitle;
     GtkWidget       *CloseEvtBox;
 
-    /* maximus settings */
+    /* maximus settings TODO */
     gchar           *setting1;
     gint             setting2;
     gboolean         setting3;

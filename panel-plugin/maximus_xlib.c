@@ -75,7 +75,7 @@ typedef struct {
 
 #define MWM_HINTS_FUNCTIONS     (1L << 0)
 #define MWM_HINTS_DECORATIONS   (1L << 1)
-#define _XA_MOTIF_WM_HINTS		"_MOTIF_WM_HINTS"
+#define _XA_MOTIF_WM_HINTS      "_MOTIF_WM_HINTS"
 
 static void gdk_window_set_mwm_hints (WnckWindow *window, MotifWmHints *new_hints);
 static void _window_set_decorations (WnckWindow      *window, GdkWMDecoration decorations);
@@ -152,9 +152,9 @@ static void gdk_window_set_mwm_hints (WnckWindow *window, MotifWmHints *new_hint
                                                       _XA_MOTIF_WM_HINTS);
   XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display),
                       wnck_window_get_xid (window),
-		                  hints_atom, 0, sizeof (MotifWmHints)/sizeof (long),
-		                  False, AnyPropertyType, &type, &format, &nitems,
-		                  &bytes_after, &data);
+                          hints_atom, 0, sizeof (MotifWmHints)/sizeof (long),
+                          False, AnyPropertyType, &type, &format, &nitems,
+                          &bytes_after, &data);
 
   if (type != hints_atom || !data)
     hints = new_hints;
@@ -204,73 +204,73 @@ void mxs_window_set_decorations(WnckWindow      *window, GdkWMDecoration decorat
 
 gboolean mxs_is_excluded (MaximusPlugin *maximus, WnckWindow *window)
 {
-	WnckWindowType type;
-	WnckWindowActions actions;
-	WnckWindowState state;
-	gchar *res_name;
-	gchar *class_name;
-	GSList *c;
-	gint i, maximused;
+    WnckWindowType type;
+    WnckWindowActions actions;
+    WnckWindowState state;
+    gchar *res_name;
+    gchar *class_name;
+    GSList *c;
+    gint i, maximused;
 
-	g_return_val_if_fail (WNCK_IS_WINDOW (window), TRUE);
+    g_return_val_if_fail (WNCK_IS_WINDOW (window), TRUE);
 
-	type = wnck_window_get_window_type (window);
-	if (type != WNCK_WINDOW_NORMAL)
-		return TRUE;
+    type = wnck_window_get_window_type (window);
+    if (type != WNCK_WINDOW_NORMAL)
+        return TRUE;
 
-	MAXIMUS_Printf ("testing is_excluded: %s\n",wnck_window_get_name (window));
+    MAXIMUS_Printf ("testing is_excluded: %s\n",wnck_window_get_name (window));
 
-	/* Ignore if the window is already fullscreen */
-	if (wnck_window_is_fullscreen (window))
-	{
-		MAXIMUS_Printf ("Excluding (is fullscreen): %s\n",wnck_window_get_name (window));
-		return TRUE;
-	}
+    /* Ignore if the window is already fullscreen */
+    if (wnck_window_is_fullscreen (window))
+    {
+        MAXIMUS_Printf ("Excluding (is fullscreen): %s\n",wnck_window_get_name (window));
+        return TRUE;
+    }
 
-	maximused = GPOINTER_TO_INT(g_object_get_data (G_OBJECT(window), "maximused"));
-	MAXIMUS_Printf ("maximused = %d\n", maximused );
-	if ( maximused == MAXIMUSED_ON )
-	{
-		MAXIMUS_Printf ("Excluding (maximused): %s\n",wnck_window_get_name (window));
-		return TRUE;
-	}
-	else if ( maximused == MAXIMUSED_DECORATED )
-	{
-		state = wnck_window_get_state(window);
-		if ( state & WNCK_WINDOW_STATE_MAXIMIZED_VERTICALLY )
-			return FALSE;
-		else
-			return TRUE;
-	}
+    maximused = GPOINTER_TO_INT(g_object_get_data (G_OBJECT(window), "maximused"));
+    MAXIMUS_Printf ("maximused = %d\n", maximused );
+    if ( maximused == MAXIMUSED_ON )
+    {
+        MAXIMUS_Printf ("Excluding (maximused): %s\n",wnck_window_get_name (window));
+        return TRUE;
+    }
+    else if ( maximused == MAXIMUSED_DECORATED )
+    {
+        state = wnck_window_get_state(window);
+        if ( state & WNCK_WINDOW_STATE_MAXIMIZED_VERTICALLY )
+            return FALSE;
+        else
+            return TRUE;
+    }
 
-	_wnck_get_wmclass (wnck_window_get_xid (window), &res_name, &class_name);
-	MAXIMUS_Printf ("Window opened: res_name=%s -- class_name=%s\n", res_name, class_name);
+    _wnck_get_wmclass (wnck_window_get_xid (window), &res_name, &class_name);
+    MAXIMUS_Printf ("Window opened: res_name=%s -- class_name=%s\n", res_name, class_name);
 
-	/* Check internal list of class_ids */
-	for (i = 0; i < G_N_ELEMENTS (default_exclude_classes); i++)
-	{
-		if (   (class_name && strstr (class_name, default_exclude_classes[i]))
-			|| (res_name && strstr (res_name, default_exclude_classes[i])) )
-		{
-			MAXIMUS_Printf ("Excluding: %s\n", wnck_window_get_name (window));
-			return TRUE;
-		}
-	}
+    /* Check internal list of class_ids */
+    for (i = 0; i < G_N_ELEMENTS (default_exclude_classes); i++)
+    {
+        if (   (class_name && strstr (class_name, default_exclude_classes[i]))
+            || (res_name && strstr (res_name, default_exclude_classes[i])) )
+        {
+            MAXIMUS_Printf ("Excluding: %s\n", wnck_window_get_name (window));
+            return TRUE;
+        }
+    }
 
-	/* Check user list */
-	for (c = maximus->exclude_class_list; c; c = c->next)
-	{
-		if ((class_name && c->data && strstr (class_name, c->data))
-			|| (res_name && c->data && strstr (res_name, c->data) ))
-		{
-			MAXIMUS_Printf ("Excluding: %s\n", wnck_window_get_name (window));
-			return TRUE;
-		}
-	}
+    /* Check user list TODO */
+    for (c = maximus->exclude_class_list; c; c = c->next)
+    {
+        if ((class_name && c->data && strstr (class_name, c->data))
+            || (res_name && c->data && strstr (res_name, c->data) ))
+        {
+            MAXIMUS_Printf ("Excluding: %s\n", wnck_window_get_name (window));
+            return TRUE;
+        }
+    }
 
-	g_free (res_name);
-	g_free (class_name);
-	return FALSE;
+    g_free (res_name);
+    g_free (class_name);
+    return FALSE;
 }
 
 
