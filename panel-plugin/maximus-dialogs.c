@@ -123,8 +123,7 @@ maximus_about (XfcePanelPlugin *plugin)
                    "authors", authors,
                    "comments", comments,
                    "copyright", copyright,
-                   "version", "0.1",
-                   //"website", "http://www.micahcarrick.com",
+                   "version", "0.1.1",
                    "program-name", "xfce4 maximus plugin",
                    "logo-icon-name", GTK_STOCK_ABOUT,
                    NULL); 

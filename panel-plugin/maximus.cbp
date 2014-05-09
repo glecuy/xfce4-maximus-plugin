@@ -38,6 +38,7 @@
 			<Add option="`pkg-config gtk+-3.0 --libs`" />
 			<Add option="`pkg-config --libs libwnck-3.0`" />
 		</Linker>
+		<Unit filename="maximus.h" />
 		<Unit filename="maximus_wnck.c">
 			<Option compilerVar="CC" />
 		</Unit>

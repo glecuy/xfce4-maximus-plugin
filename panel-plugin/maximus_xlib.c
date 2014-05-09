@@ -46,7 +46,6 @@ static gchar *default_exclude_classes[] =
   "Ekiga",
   "Extension", /* Firefox Add-Ons/Extension Window */
   "Gcalctool",
-  "Gimp",
   "inkscape",
   "Global", /* Firefox Error Console Window */
   "Gnome-dictionary",
@@ -252,7 +251,7 @@ gboolean mxs_is_excluded (MaximusPlugin *maximus, WnckWindow *window)
         if (   (class_name && strstr (class_name, default_exclude_classes[i]))
             || (res_name && strstr (res_name, default_exclude_classes[i])) )
         {
-            MAXIMUS_Printf ("Excluding: %s\n", wnck_window_get_name (window));
+            MAXIMUS_Printf ("Excluding: %s [%s,%s]\n", wnck_window_get_name(window), class_name, res_name);
             return TRUE;
         }
     }

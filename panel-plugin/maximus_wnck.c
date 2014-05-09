@@ -38,6 +38,8 @@
 #include "maximus_wnd.h"
 #ifndef MXS_DBG_ONLY
 #include "maximus-dialogs.h"
+#else
+#define _(S) (S)
 #endif
 
 void MAXIMUS_Log( char *fmt, ... )
@@ -46,8 +48,9 @@ void MAXIMUS_Log( char *fmt, ... )
 
     if ( flog == NULL )
     {
-        flog = fopen("/tmp/maximus.log", "at" );
-        fprintf(flog, "maximus is starting...\n");
+		char logName[80];
+		snprintf(logName, 80, "/tmp/maximus-%d.log", getuid() );
+        flog = fopen(logName, "at" );
     }
 
     if ( flog != NULL )
@@ -218,6 +221,18 @@ void on_mxs_window_closed(WnckScreen *screen, WnckWindow *window, MaximusPlugin 
 }
 
 
+static void active_window_name_changed( WnckWindow * window, MaximusPlugin *maximus )
+{
+    if ( GPOINTER_TO_INT(g_object_get_data (G_OBJECT(window), "maximused")) != 0 )
+    {
+        const char * pTitle;
+        pTitle =  wnck_window_get_name(window);
+        gtk_label_set_text( GTK_LABEL(maximus->WinTitle), pTitle );
+    }
+    MAXIMUS_Printf("active_window_name_changed()\n" );
+}
+
+
 /* Triggers when a new active window is selected */
 static void active_window_changed (WnckScreen *screen,
                                    WnckWindow *previous,
@@ -238,6 +253,10 @@ static void active_window_changed (WnckScreen *screen,
             wnck_window_maximize(active_window);
 
             mxs_NewIconAdd( maximus, active_window );
+            
+            /* Want to be notified if window name change */
+			g_signal_connect(active_window, "name-changed", G_CALLBACK (active_window_name_changed), maximus);
+    
             // Mark window "maximused" */
             mxs_set_maximused(active_window, MAXIMUSED_ON);
             gdk_flush();
@@ -258,7 +277,6 @@ static void active_window_changed (WnckScreen *screen,
         }
     }
 }
-
 
 
 void track_active_wnd( MaximusPlugin *maximus )
