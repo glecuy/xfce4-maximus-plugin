@@ -15,19 +15,39 @@ Screenshot
 
 
 Build/Installation
-============
+==================
+Configuration - build :
+
 ```sh
 ./autogen.sh --prefix=/usr
 
 make 
+```
+To generate a distrib independent intallation archive :
 
+```sh
 make install_tar
 ```
+To generate a a debian compatible intallation packet (.deb):
 
-This target shall generate a distrib independent intallation archive ...
+```sh
+make install_deb
+```
 
-Original Maximus Package
-------------------------
+binary package for i386 architecture: [xfce4-maximus_i386.deb]
 
-It's a deamon used in Ubuntu Netbook Edition (10.04) See package description at [site] [1]:
+
+
+Information about original Maximus Package
+------------------------------------------
+
+It's a deamon used in Ubuntu Netbook Edition (10.04) See package description at [maximus]:
+
+
+
+[xfce4-maximus_i386.deb]:http://frilouze.chez.com/deb/xfce4-maximus_0.1.1git-b3f72f8_i386.deb
+
+[maximus]:https://launchpad.net/ubuntu/+source/maximus
+
+
 
