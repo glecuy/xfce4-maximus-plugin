@@ -18,6 +18,14 @@ install_tar:
 	rm -f $(PACKAGE).tgz
 	fakeroot tar cvfz $(PACKAGE).tgz -C /tmp/tmp_$(USER)/ .
 
+install_deb:
+	rm -fr /tmp/tmp_$(USER)
+	mkdir -p /tmp/tmp_$(USER)/$(PACKAGE)-$(VERSION)/DEBIAN
+	cp deb_control /tmp/tmp_$(USER)/$(PACKAGE)-$(VERSION)/DEBIAN/control
+	$(MAKE) install $(AM_MAKEFLAGS) DESTDIR="/tmp/tmp_$(USER)/$(PACKAGE)-$(VERSION)/"
+	rm -f $(PACKAGE)*.deb
+	fakeroot dpkg-deb -b /tmp/tmp_$(USER)/$(PACKAGE)-$(VERSION) .
+	
 .PHONY: ChangeLog
 
 ChangeLog: Makefile

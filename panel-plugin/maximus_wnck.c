@@ -226,8 +226,48 @@ static void active_window_name_changed( WnckWindow * window, MaximusPlugin *maxi
     if ( GPOINTER_TO_INT(g_object_get_data (G_OBJECT(window), "maximused")) != 0 )
     {
         const char * pTitle;
-        pTitle =  wnck_window_get_name(window);
+        GtkAllocation Allocation;
+		PangoLayout * layout;
+        int w,h;
+        int MaxSize;
+
+        pTitle =  wnck_window_get_name(window); 
+        if ( pTitle == NULL )
+        {
+			return;
+		}       
         gtk_label_set_text( GTK_LABEL(maximus->WinTitle), pTitle );
+        
+        // Test text size to make sure widget is large enough
+        // Retrieve size in pixel available for title
+        gtk_widget_get_allocation ( GTK_WIDGET(maximus->hvbox), &Allocation );
+        MaxSize = Allocation.width;
+        gtk_widget_get_allocation ( GTK_WIDGET(maximus->hIconBox), &Allocation );
+        MaxSize -= Allocation.width;
+        gtk_widget_get_allocation ( GTK_WIDGET(maximus->CloseEvtBox), &Allocation );        
+        MaxSize -= Allocation.width;
+		
+		// Get required size in pixel for title text
+        layout = gtk_label_get_layout(GTK_LABEL(maximus->WinTitle));
+        pango_layout_get_size (layout , &w, &h);
+        w = w/PANGO_SCALE;
+        h = h/PANGO_SCALE;
+        MAXIMUS_Printf("Text Size=%d / %d\n", w, h );
+		MAXIMUS_Printf("MaxWidth=%d\n", MaxSize );
+		
+		if ( w > MaxSize )
+		{
+			gchar * ShortedTitle;
+			int len;
+					
+			ShortedTitle = g_strdup(pTitle);
+			len = strlen( ShortedTitle );
+			MAXIMUS_Printf("Resizin Text... %d\n", len );
+			len = (len * MaxSize)/w - 2;
+			ShortedTitle[len] = '\0';
+			gtk_label_set_text( GTK_LABEL(maximus->WinTitle), ShortedTitle );
+			g_free( ShortedTitle );
+		}        
     }
     MAXIMUS_Printf("active_window_name_changed()\n" );
 }
@@ -253,10 +293,10 @@ static void active_window_changed (WnckScreen *screen,
             wnck_window_maximize(active_window);
 
             mxs_NewIconAdd( maximus, active_window );
-            
+
             /* Want to be notified if window name change */
 			g_signal_connect(active_window, "name-changed", G_CALLBACK (active_window_name_changed), maximus);
-    
+
             // Mark window "maximused" */
             mxs_set_maximused(active_window, MAXIMUSED_ON);
             gdk_flush();
@@ -270,11 +310,7 @@ static void active_window_changed (WnckScreen *screen,
             }
             MAXIMUS_Printf ("Window:%s excluded\n", wnck_window_get_name(active_window) );
         }
-        if ( GPOINTER_TO_INT(g_object_get_data (G_OBJECT(active_window), "maximused")) != 0 )
-        {
-            gtk_label_set_text( GTK_LABEL(maximus->WinTitle), pTitle );
-            maximus->MaximizedWindow = active_window;
-        }
+        active_window_name_changed( active_window, maximus );
     }
 }
 

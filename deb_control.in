@@ -1,0 +1,13 @@
+Package: xfce4-maximus
+Priority: optional
+Homepage: https://github.com/glecuy/xfce4-maximus
+Section: x11
+Installed-Size: 250
+Maintainer: G Lecuyer <glecuyer207@gmail.com>
+Architecture: i386
+Version: @VERSION@
+Depends: libc6 (>= 2.10), xfce4-panel
+Description: maximus plugin for the Xfce panel version 4.8 or higher.
+	It permits to manage windows maximization and decorations. It is mainly intended to be used on netbook or other small screen computers. 
+	It tries to maximalize most applications window and merges title bar and panel bar to save vertical space.
+

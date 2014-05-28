@@ -9,7 +9,7 @@ dnl ***************************
 dnl *** Version information ***
 dnl ***************************
 m4_define([maximus_version_major], [0])
-m4_define([maximus_version_minor], [0])
+m4_define([maximus_version_minor], [1])
 m4_define([maximus_version_micro], [1])
 m4_define([maximus_version_nano],  []) dnl leave this empty to have no nano version
 m4_define([maximus_version_build], [@REVISION@])
@@ -108,6 +108,7 @@ icons/48x48/Makefile
 icons/scalable/Makefile
 panel-plugin/Makefile
 po/Makefile.in
+deb_control
 ])
 
 dnl ***************************
