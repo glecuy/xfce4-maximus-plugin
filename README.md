@@ -31,7 +31,7 @@ make install_tar
 To generate a a debian compatible intallation packet (.deb):
 
 ```sh
-make install_deb
+make deb
 ```
 
 binary package for i386 architecture: [xfce4-maximus_i386.deb]
@@ -45,7 +45,7 @@ It's a deamon used in Ubuntu Netbook Edition (10.04) See package description at 
 
 
 
-[xfce4-maximus_i386.deb]:http://frilouze.chez.com/deb/xfce4-maximus_0.1.1git-b3f72f8_i386.deb
+[xfce4-maximus_i386.deb]:http://frilouze.chez.com/deb/xfce4-maximus_i386.deb
 
 [maximus]:https://launchpad.net/ubuntu/+source/maximus
 

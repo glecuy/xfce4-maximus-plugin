@@ -18,7 +18,7 @@ install_tar:
 	rm -f $(PACKAGE).tgz
 	fakeroot tar cvfz $(PACKAGE).tgz -C /tmp/tmp_$(USER)/ .
 
-install_deb:
+deb:
 	rm -fr /tmp/tmp_$(USER)
 	mkdir -p /tmp/tmp_$(USER)/$(PACKAGE)-$(VERSION)/DEBIAN
 	cp deb_control /tmp/tmp_$(USER)/$(PACKAGE)-$(VERSION)/DEBIAN/control

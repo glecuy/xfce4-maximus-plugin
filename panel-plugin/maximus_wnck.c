@@ -310,7 +310,11 @@ static void active_window_changed (WnckScreen *screen,
             }
             MAXIMUS_Printf ("Window:%s excluded\n", wnck_window_get_name(active_window) );
         }
-        active_window_name_changed( active_window, maximus );
+        if ( GPOINTER_TO_INT(g_object_get_data (G_OBJECT(active_window), "maximused")) != 0 )
+        {
+            maximus->MaximizedWindow = active_window;
+            active_window_name_changed(active_window, maximus);
+        }
     }
 }
 
