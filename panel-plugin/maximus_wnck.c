@@ -129,6 +129,8 @@ static void mxs_OnClickedIcons(GtkWidget *widget, GdkEventButton *event, WindowI
             else if ( event->button == 3 )
             {
                 mxs_WindowMenuCreate( widget, window );
+                // Trick to avoid event to be processed by panel !
+                event->button = 0;             
             }
         }
     }
@@ -151,6 +153,7 @@ WindowIcon_t * mxs_NewIconAdd( MaximusPlugin *maximus, WnckWindow * win )
         if ( maximus->IconList == NULL )
         {
             maximus->IconList = pIcon;
+            gtk_widget_set_sensitive(maximus->CloseEvtBox, TRUE);
         }
         else
         {
@@ -215,6 +218,7 @@ void on_mxs_window_closed(WnckScreen *screen, WnckWindow *window, MaximusPlugin 
     if ( maximus->IconList == NULL )
     {
         maximus->MaximizedWindow = NULL;
+        gtk_widget_set_sensitive(maximus->CloseEvtBox, FALSE);
         gtk_label_set_text( GTK_LABEL(maximus->WinTitle), _("Desktop") );
     }
     MAXIMUS_Printf("on_mxs_window_closed: %s\n", wnck_window_get_name(window) );
@@ -300,6 +304,8 @@ static void active_window_changed (WnckScreen *screen,
             // Mark window "maximused" */
             mxs_set_maximused(active_window, MAXIMUSED_ON);
             gdk_flush();
+            // Useful in some cases (firefox, ...)
+            usleep( 300000 );
         }
         else
         {
