@@ -176,14 +176,16 @@ maximus_new (XfcePanelPlugin *plugin)
     gtk_box_pack_start (GTK_BOX (maximus->hvbox), maximus->WinTitle, FALSE, FALSE, 0);
 
     /* 3- Widget for close button */
-    maximus->CloseEvtBox = gtk_event_box_new();
+    maximus->CloseButton = gtk_button_new();
     Image = gtk_image_new_from_stock( GTK_STOCK_CLOSE, GTK_ICON_SIZE_SMALL_TOOLBAR );
     gtk_widget_show (Image);
-    gtk_container_add (GTK_CONTAINER (maximus->CloseEvtBox), Image);
-    gtk_widget_show (maximus->CloseEvtBox);
-    gtk_box_pack_end(GTK_BOX (maximus->hvbox), maximus->CloseEvtBox, FALSE, FALSE, 0);
-    gtk_widget_set_tooltip_text( maximus->CloseEvtBox, _("Close current active window") );
-    g_signal_connect(G_OBJECT(maximus->CloseEvtBox), "button_press_event", G_CALLBACK(mxs_OnClickedCloseWindow), (gpointer)maximus);
+    gtk_button_set_image( GTK_BUTTON(maximus->CloseButton), Image );
+    gtk_container_add (GTK_CONTAINER (maximus->CloseButton), Image);
+    gtk_button_set_relief( GTK_BUTTON(maximus->CloseButton), GTK_RELIEF_NONE );
+    gtk_widget_show (maximus->CloseButton);
+    gtk_box_pack_end(GTK_BOX (maximus->hvbox), maximus->CloseButton, FALSE, FALSE, 0);
+    gtk_widget_set_tooltip_text( maximus->CloseButton, _("Close current active window") );
+    g_signal_connect(G_OBJECT(maximus->CloseButton), "button_press_event", G_CALLBACK(mxs_OnClickedCloseWindow), (gpointer)maximus);
 
     xfce_panel_plugin_set_expand( maximus->plugin, TRUE );
 

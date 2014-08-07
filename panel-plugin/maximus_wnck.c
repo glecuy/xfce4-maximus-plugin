@@ -153,7 +153,7 @@ WindowIcon_t * mxs_NewIconAdd( MaximusPlugin *maximus, WnckWindow * win )
         if ( maximus->IconList == NULL )
         {
             maximus->IconList = pIcon;
-            gtk_widget_set_sensitive(maximus->CloseEvtBox, TRUE);
+            gtk_widget_set_sensitive(maximus->CloseButton, TRUE);
         }
         else
         {
@@ -218,7 +218,7 @@ void on_mxs_window_closed(WnckScreen *screen, WnckWindow *window, MaximusPlugin 
     if ( maximus->IconList == NULL )
     {
         maximus->MaximizedWindow = NULL;
-        gtk_widget_set_sensitive(maximus->CloseEvtBox, FALSE);
+        gtk_widget_set_sensitive(maximus->CloseButton, FALSE);
         gtk_label_set_text( GTK_LABEL(maximus->WinTitle), _("Desktop") );
     }
     MAXIMUS_Printf("on_mxs_window_closed: %s\n", wnck_window_get_name(window) );
@@ -248,7 +248,7 @@ static void active_window_name_changed( WnckWindow * window, MaximusPlugin *maxi
         MaxSize = Allocation.width;
         gtk_widget_get_allocation ( GTK_WIDGET(maximus->hIconBox), &Allocation );
         MaxSize -= Allocation.width;
-        gtk_widget_get_allocation ( GTK_WIDGET(maximus->CloseEvtBox), &Allocation );        
+        gtk_widget_get_allocation ( GTK_WIDGET(maximus->CloseButton), &Allocation );        
         MaxSize -= Allocation.width;
 		
 		// Get required size in pixel for title text

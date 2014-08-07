@@ -39,7 +39,9 @@
 static gchar *default_exclude_classes[] =
 {
   "xfce4-panel",
+  "xfce4-mixer",
   "wrapper",
+  "mintUpdate",
   "Bluetooth-properties",
   "Bluetooth-wizard",
   "Places", /* Firefox Download Window */

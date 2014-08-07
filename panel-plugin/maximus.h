@@ -48,7 +48,7 @@ typedef struct
     GtkWidget       *hvbox;
     GtkWidget       *hIconBox;
     GtkWidget       *WinTitle;
-    GtkWidget       *CloseEvtBox;
+    GtkWidget       *CloseButton;
 
     /* maximus settings TODO */
     gchar           *setting1;
