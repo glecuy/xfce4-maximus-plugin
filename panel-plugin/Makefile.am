@@ -1,11 +1,11 @@
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir) \
 	-DG_LOG_DOMAIN=\"xfce4-maximus-plugin\" \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\" \
 	$(PLATFORM_CPPFLAGS)
 
 #
-# Sample plugin
+# Maximus plugin
 #
 plugin_LTLIBRARIES = \
 	libmaximus.la
@@ -55,9 +55,6 @@ desktop_DATA =								\
 @INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST =								\
-	test/main.c								\
-	test/maximus_xlib.c						\
-	maximus.cbp						        \
 	maximus.desktop.in
 
 CLEANFILES =								\

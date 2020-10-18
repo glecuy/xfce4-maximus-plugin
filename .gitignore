@@ -1,23 +1,29 @@
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Libraries
-*.lib
-*.a
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+*.gmo
+*.la
+*.lo
+*.swp
+*.tar.*
+.deps
+.libs
+ChangeLog
+INSTALL
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+compile
+config*
+depcomp
+install-sh
+intltool*
+libtool
+ltmain.sh
+missing
+mkinstalldirs
+panel-plugin/*.desktop
+panel-plugin/*.desktop.in
+po/.intltool-merge-cache
+po/Makefile.in.in
+po/POTFILES
+stamp-*
+m4

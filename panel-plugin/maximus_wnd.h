@@ -20,13 +20,6 @@
 #ifndef __MAXIMUS_WND_H__
 #define __MAXIMUS_WND_H__
 
-extern void MAXIMUS_Log( char *fmt, ... );
-
-//#define MAXIMUS_Printf g_print
-//#define MAXIMUS_Printf MAXIMUS_Log
-#define MAXIMUS_Printf(fmt, ...) ((void)0)
-
-
 #define mxs_get_maximused(win)         (GPOINTER_TO_INT(g_object_get_data (G_OBJECT(win), "maximused")))
 #define mxs_set_maximused(win, value)  (g_object_set_data( G_OBJECT (win), "maximused", GINT_TO_POINTER(value)))
 

@@ -31,8 +31,10 @@
 #ifndef MXS_DBG_ONLY
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4panel/xfce-panel-plugin.h>
-#include <libxfce4panel/xfce-hvbox.h>
 #endif
+
+#include "maximus.h"
+#include "maximus_wnck.h"
 
 #include "maximus.h"
 #include "maximus_wnd.h"
@@ -41,27 +43,6 @@
 #else
 #define _(S) (S)
 #endif
-
-void MAXIMUS_Log( char *fmt, ... )
-{
-    static FILE * flog;
-
-    if ( flog == NULL )
-    {
-		char logName[80];
-		snprintf(logName, 80, "/tmp/maximus-%d.log", getuid() );
-        flog = fopen(logName, "at" );
-    }
-
-    if ( flog != NULL )
-    {
-        va_list  VAList;
-        va_start(VAList, fmt);
-        vfprintf(flog, fmt, VAList);
-        va_end(VAList);
-    }
-    fflush(flog);
-}
 
 
 static gboolean mxs_need_to_restore_decorations (MaximusPlugin *maximus, WnckWindow *window)
@@ -290,6 +271,7 @@ static void active_window_changed (WnckScreen *screen,
     {
         const char * pTitle;
         pTitle =  wnck_window_get_name(active_window);
+        (void)pTitle;
         MAXIMUS_Printf ("Active window:%s\n", pTitle );
         if( ! mxs_is_excluded( maximus, active_window ) )
         {

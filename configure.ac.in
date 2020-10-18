@@ -1,8 +1,7 @@
-dnl $Id$
 dnl
-dnl xfce4-maximus-plugin - A sample plugin for the Xfce panel
+dnl xfce4-maximus-plugin - Maximus plugin for the Xfce panel
 dnl
-dnl 2012 John Doo <john@foo.org>
+dnl 2020 John Doo <john@example.org>
 dnl
 
 dnl ***************************
@@ -15,23 +14,25 @@ m4_define([maximus_version_nano],  []) dnl leave this empty to have no nano vers
 m4_define([maximus_version_build], [@REVISION@])
 m4_define([maximus_version_tag], [git])
 m4_define([maximus_version], [maximus_version_major().maximus_version_minor().maximus_version_micro()ifelse(maximus_version_nano(), [], [], [.maximus_version_nano()])ifelse(maximus_version_tag(), [git], [maximus_version_tag()-maximus_version_build()], [maximus_version_tag()])])
+m4_define([maximus_default_debug], [ifelse(maximus_version_tag(), [git], [yes], [minimum])])
 
+AC_CONFIG_MACRO_DIR([m4])
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
-AC_COPYRIGHT([Copyright (C) 2012
+AC_COPYRIGHT([Copyright (C) 2020
         The Xfce development team. All rights reserved.])
-AC_INIT([xfce4-maximus-plugin], [maximus_version], [http://bugzilla.xfce.org/], [xfce4-maximus-plugin])
+AC_INIT([xfce4-maximus-plugin], [maximus_version], [https://gitlab.xfce.org/panel-plugins/xfce4-maximus-plugin], [xfce4-maximus-plugin])
 AC_PREREQ([2.50])
 AC_REVISION([xfce4_panel_version_build])
 
 dnl ***************************
 dnl *** Initialize automake ***
 dnl ***************************
-AM_INIT_AUTOMAKE([1.8 no-dist-gzip dist-bzip2 tar-ustar])
-AM_CONFIG_HEADER([config.h])
+AM_INIT_AUTOMAKE([1.15 no-dist-gzip dist-bzip2 tar-ustar foreign])
+AC_CONFIG_HEADER([config.h])
 AM_MAINTAINER_MODE()
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+AM_SILENT_RULES([yes])
 
 dnl **************************
 dnl *** Initialize libtool ***
@@ -39,20 +40,14 @@ dnl **************************
 LT_PREREQ([2.2.6])
 LT_INIT([disable-static])
 
-dnl *******************************
-dnl *** Check for UNIX variants ***
-dnl *******************************
-AC_AIX()
-AC_ISC_POSIX()
-
 dnl ********************************
 dnl *** Check for basic programs ***
 dnl ********************************
 AC_PROG_CC()
-AM_PROG_CC_C_O()
+AC_PROG_CC_C_O()
 AC_PROG_LD()
 AC_PROG_INSTALL()
-AC_PROG_INTLTOOL()
+IT_PROG_INTLTOOL([0.35.0])
 
 dnl **********************************
 dnl *** Check for standard headers ***
@@ -76,17 +71,14 @@ XDT_CHECK_LIBX11_REQUIRE()
 dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
-XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.20.0])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1], [4.8.0])
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.8.0])
-XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0], [4.8.0])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.10.0])
-XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-1.0], [2.30])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.14.0])
+XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [4.14.0])
+XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [3.0])
 
 dnl ***********************************
 dnl *** Check for debugging support ***
 dnl ***********************************
-XDT_FEATURE_DEBUG()
+XDT_FEATURE_DEBUG([maximus_default_debug])
 
 dnl *********************************
 dnl *** Substitute platform flags ***
@@ -101,7 +93,7 @@ AC_MSG_CHECKING([PLATFORM_LDFLAGS])
 AC_MSG_RESULT([$PLATFORM_LDFLAGS])
 AC_SUBST([PLATFORM_LDFLAGS])
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 icons/Makefile
 icons/48x48/Makefile
@@ -110,6 +102,7 @@ panel-plugin/Makefile
 po/Makefile.in
 deb_control
 ])
+AC_OUTPUT
 
 dnl ***************************
 dnl *** Print configuration ***

@@ -1,6 +1,6 @@
 /*  $Id$
  *
- *  Copyright (C) 2014 glecuy
+ *  Copyright (C) 2014 - 2020 glecuyer
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,9 +20,13 @@
 #ifndef __MAXIMUS_H__
 #define __MAXIMUS_H__
 
+void MAXIMUS_Log( char *fmt, ... );
+
+//#define MAXIMUS_Printf MAXIMUS_Log
+#define MAXIMUS_Printf(fmt, ...) ((void)0)
+
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
-
 
 G_BEGIN_DECLS
 
@@ -35,17 +39,15 @@ typedef struct WindowIcon_s{
     struct WindowIcon_s * pNext;
 } WindowIcon_t;
 
-
 /* plugin structure */
 typedef struct
 {
-#ifndef MXS_DBG_ONLY
     XfcePanelPlugin *plugin;
-#endif
 
     /* panel widgets */
     GtkWidget       *ebox;
     GtkWidget       *hvbox;
+    GtkWidget       *label;
     GtkWidget       *hIconBox;
     GtkWidget       *WinTitle;
     GtkWidget       *CloseButton;
@@ -71,12 +73,12 @@ MaximusPlugin;
 #define MAXIMUSED_ON   1
 #define MAXIMUSED_DECORATED 2
 
-#ifndef MXS_DBG_ONLY
-void maximus_save (XfcePanelPlugin *plugin,
-             MaximusPlugin    *maximus);
-#endif
 
 void mxs_OnClickedCloseWindow(GtkWidget *widget, GdkEventButton *event, MaximusPlugin *maximus);
+
+void
+maximus_save (XfcePanelPlugin *plugin,
+             MaximusPlugin    *maximus);
 
 G_END_DECLS
 

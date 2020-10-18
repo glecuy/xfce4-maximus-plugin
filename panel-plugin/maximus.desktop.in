@@ -6,4 +6,5 @@ _Comment=Maximus plugin for the Xfce panel
 Icon=xfce4-maximus-plugin
 X-XFCE-Module=maximus
 X-XFCE-Internal=false
-X-XFCE-Unique=true
+X-XFCE-Unique=false
+X-XFCE-API=2.0

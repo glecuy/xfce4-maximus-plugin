@@ -29,7 +29,6 @@
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4panel/xfce-panel-plugin.h>
-#include <libxfce4panel/xfce-hvbox.h>
 
 #include "maximus.h"
 #include "maximus_wnd.h"
@@ -110,7 +109,7 @@ void _wnck_get_wmclass (Window xwindow,
   ch.res_name = NULL;
   ch.res_class = NULL;
 
-  XGetClassHint (gdk_display, xwindow, &ch);
+  XGetClassHint (gdk_x11_get_default_xdisplay(), xwindow, &ch);
 
   if (res_class)
     *res_class = NULL;
@@ -179,7 +178,7 @@ static void gdk_window_set_mwm_hints (WnckWindow *window, MotifWmHints *new_hint
                    wnck_window_get_xid (window),
                    hints_atom, hints_atom, 32, PropModeReplace,
                    (guchar *)hints, sizeof (MotifWmHints)/sizeof (long));
-  gdk_flush ();
+  gdk_display_flush(display);
 
   if (data)
     XFree (data);

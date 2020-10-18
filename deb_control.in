@@ -4,7 +4,7 @@ Homepage: https://github.com/glecuy/xfce4-maximus
 Section: x11
 Installed-Size: 250
 Maintainer: G Lecuyer <glecuyer207@gmail.com>
-Architecture: i386
+Architecture: amd64
 Version: @VERSION@
 Depends: libc6 (>= 2.10), xfce4-panel
 Description: maximus plugin for the Xfce panel version 4.8 or higher.
